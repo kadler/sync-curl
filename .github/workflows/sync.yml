@@ -1,0 +1,20 @@
+name: Sync upstream
+
+on:
+  schedule:
+  - cron:  "*/15 * * * *"
+  workflow_dispatch:
+
+jobs:
+  repo-sync:
+    runs-on: ubuntu-latest
+    steps:
+    - name: git-sync
+      uses: wei/git-sync@v3
+      with:
+        source_repo: "https://github.com/curl/curl.git"
+        source_branch: "master"
+        destination_repo: "git@github.com:kadler/curl.git"
+        destination_branch: "master"
+        destination_ssh_private_key: ${{ secrets.DESTINATION_SSH_PRIVATE_KEY }}
+
